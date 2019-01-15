@@ -1,0 +1,16 @@
+{
+  "name": "acid-challenge-api",
+  "version": "1.0.0",
+  "description": "Acid Lab Challenge for Full Stack Javascript Develop - API",
+  "main": "index.js",
+  "repository": "git@github.com:jesusgoku/acid-challenge.git",
+  "author": "Jesus Urrutia <jesus.urrutia@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
