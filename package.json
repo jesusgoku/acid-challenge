@@ -7,6 +7,10 @@
   "author": "Jesus Urrutia <jesus.urrutia@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "foreman": "node_modules/.bin/nf",
+    "api:start": "npm run foreman -- start api"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "foreman": "^3.0.1"
