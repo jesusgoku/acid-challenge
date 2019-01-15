@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  cache:
+    image: redis:5.0.3-alpine
+    restart: always
+
+  api:
+    image: node:8.15.0-alpine
+
+  app:
+    image: nginx:1.15.8-alpine
+
+  proxy:
+    image: traefik:1.7.7-alpine
+    restart: always
