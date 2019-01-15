@@ -6,5 +6,8 @@
   "repository": "git@github.com:jesusgoku/acid-challenge.git",
   "author": "Jesus Urrutia <jesus.urrutia@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
