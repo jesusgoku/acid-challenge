@@ -1,0 +1,10 @@
+{
+  "name": "acid-challenge",
+  "version": "1.0.0",
+  "description": "Acid Lab Challenge for Full Stack Javascript Develop",
+  "main": "index.js",
+  "repository": "git@github.com:jesusgoku/acid-challenge.git",
+  "author": "Jesus Urrutia <jesus.urrutia@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
