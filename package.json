@@ -8,8 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "foreman": "node_modules/.bin/nf",
-    "api:start": "npm run foreman -- start api"
+    "start": "node_modules/.bin/nf",
+    "api:start": "cd api && npm run start",
+    "api:watch": "cd api && npm run watch"
   },
   "dependencies": {
     "axios": "^0.18.0",
