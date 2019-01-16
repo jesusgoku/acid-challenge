@@ -1,7 +1,8 @@
-const app = require('./config/app');
+import app from './config/app';
+import config from './config/config';
 
 
-const PORT = process.env.PORT || 8000;
+const PORT = config.API.PORT;
 
 app.listen(PORT, () => {
   console.log(`listen on port: ${PORT}`);

@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 
-const forecast = require('../components/forecast/routes');
+import forecast from '../components/forecast/routes';
 
 const router = express.Router();
 
 router.use('/forecast', forecast);
 
-module.exports = router;
+export default router;

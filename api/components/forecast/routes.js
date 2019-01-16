@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const controllers = require('./controllers');
+import { getForecast, getCurrentForecast } from './controllers';
 
 
 const router = express.Router();
 
-router.get('/', controllers.getForecast);
-router.get('/current', controllers.getCurrentForecast);
+router.get('/', getForecast);
+router.get('/current', getCurrentForecast);
 
-module.exports = router;
+export default router;
