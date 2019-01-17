@@ -12,6 +12,7 @@
     "watch": "node_modules/.bin/nodemon -r esm index.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "esm": "^3.0.84",
     "express": "^4.16.4",
     "rc": "^1.2.8"
