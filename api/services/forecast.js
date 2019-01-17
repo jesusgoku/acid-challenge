@@ -1,4 +1,4 @@
-import DarkSky from '../libraries/darksky';
+import DarkSky from '../libraries/darksky-bad';
 import config from '../config/config';
 
 
