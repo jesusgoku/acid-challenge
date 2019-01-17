@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { getForecast, getCurrentForecast } from './controllers';
+import { getForecast, getTimeMachine } from './controllers';
 
 
 const router = express.Router();
 
-router.get('/', getForecast);
-router.get('/current', getCurrentForecast);
+router.get('/:lat,:lng', getForecast);
+router.get('/:lat,:lng,:time', getTimeMachine);
 
 export default router;
