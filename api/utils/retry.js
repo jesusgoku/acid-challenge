@@ -14,6 +14,7 @@ export default async function retry(fn, maxRetries = 10, retriesDelay = 1000) {
     }
 
     await new Promise(resolve => setTimeout(resolve, retriesDelay));
-    retry(fn, maxRetries - 1, retriesDelay);
+
+    return retry(fn, maxRetries - 1, retriesDelay);
   }
 }
