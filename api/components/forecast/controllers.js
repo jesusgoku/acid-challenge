@@ -1,5 +1,6 @@
 import forecast from '../../services/forecast';
 import retry from '../../utils/retry';
+import cache from '../../services/cache';
 
 
 export function getForecast(req, res, next) {
@@ -8,6 +9,12 @@ export function getForecast(req, res, next) {
 
 
   retry(() => forecast.getCurrentForecast(lat, lng, params))
+    .then(data => {
+      const key = `forecast_cache_${lat}_${lng}`;
+      cache.setex(key, 3600, JSON.stringify(data));
+
+      return data;
+    })
     .then(data => res.json(data))
     .catch(next)
   ;
