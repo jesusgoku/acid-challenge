@@ -1,25 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
+import Modal from './components/Modal';
+import ForecastBox from './components/ForecastBox';
+
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalOpen: true,
+    };
+
+    this.handleToggleModal = this.handleToggleModal.bind(this);
+  }
+
+  handleToggleModal() {
+    this.setState(currentState => ({
+      modalOpen: !currentState.modalOpen,
+    }));
+  }
+
   render() {
+    const { modalOpen } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <button onClick={this.handleToggleModal}>Open</button>
+
+        <Modal
+          open={modalOpen}
+          onClose={this.handleToggleModal}>
+          <ForecastBox country="Chile" capital="Santiago" temperature={29}></ForecastBox>
+        </Modal>
       </div>
     );
   }
