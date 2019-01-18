@@ -1,0 +1,35 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+.Modal-open {
+  display: flex;
+}
+
+.Modal__box {
+  position: relative;
+
+  background-color: rgb(255, 255, 255);
+  padding: 25px;
+  border-radius: 12px;
+
+  min-width: 200px;
+}
+
+.Modal__close {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translateY(110%);
+}
