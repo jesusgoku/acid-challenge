@@ -1,0 +1,9 @@
+.ForecastBox__country {
+  font-size: 2em;
+  margin: 0;
+}
+
+.ForecastBox__capital {
+  color: #333;
+  margin: 0;
+}
