@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: ../docker/api/Dockerfile
+    image: acid-challenge-api:latest
+    volumes:
+      - ./api:/home/node/app
+    ports:
+      - 8000:8000
+    command: yarn watch
