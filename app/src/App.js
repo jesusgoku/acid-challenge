@@ -27,9 +27,9 @@ class App extends Component {
     this.apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     this.options = {
       center: { lat: -33.45, lng: -70.666667 },
-      zoom: 3,
-      minZoom: 3,
-      maxZoom: 3,
+      zoom: 4,
+      minZoom: 4,
+      maxZoom: 4,
       zoomControl: false,
       mapTypeControl: false,
       streetViewControl: false,
