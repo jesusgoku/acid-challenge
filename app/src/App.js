@@ -6,7 +6,7 @@ import Modal from './components/Modal';
 
 import forecastService from './services/forecast';
 import googleGeocodeService from './services/google-geocode';
-import { getCountryCapital } from './services/country-capital';
+import { getCountryCapital, getCountryCapitalCoords } from './services/country-capital';
 
 
 
@@ -49,27 +49,39 @@ class App extends Component {
     const { latLng } = e;
     const coords = { lat: latLng.lat(), lng: latLng.lng() };
 
-    Promise.all([
-      forecastService.getCurrentForecast(coords.lat, coords.lng),
-      googleGeocodeService.getReverseGeocodingCountry(coords.lat, coords.lng),
-    ])
-      .then(([forecast, geocodeData]) => {
-        const { temperature, icon } = forecast.currently;
-
+    googleGeocodeService
+      .getReverseGeocodingCountry(coords.lat, coords.lng)
+      .then(geocodeData => {
         const countryComponent = geocodeData.status === 'OK'
           ? geocodeData.results.find(i => i.types[0] === 'country').address_components[0]
           : null;
 
         let country = 'N/A';
         let capital = 'N/A';
+        let capitalCoords = null;
 
         if (countryComponent) {
           const { long_name: countryName, short_name: countryCode } = countryComponent;
           country = countryName;
           capital = getCountryCapital(countryCode) || 'N/A';
+          capitalCoords = getCountryCapitalCoords(countryCode);
         }
 
-        return { country, capital, temperature, icon };
+        return { country, capital, capitalCoords };
+      })
+      .then(({ country, capital, capitalCoords }) => {
+
+        return Promise.all([
+          Promise.resolve({ country, capital }),
+          capitalCoords
+            ? forecastService.getCurrentForecast(capitalCoords.lat, capitalCoords.lng)
+            : forecastService.getCurrentForecast(coords.lat, coords.lng),
+        ]);
+      })
+      .then(([{ country, capital }, forecast]) => {
+        const { temperature, icon } = forecast.currently;
+
+        return { temperature, icon, country, capital };
       })
       .then(forecastBoxProps => this.setState({ forecastBoxProps }))
       .then(() => { this.handleToggleModal(); })
