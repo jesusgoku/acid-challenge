@@ -4,9 +4,7 @@ import ForecastBox from './components/ForecastBox';
 import Map from './components/Map';
 import Modal from './components/Modal';
 
-import forecastService from './services/forecast';
-import googleGeocodeService from './services/google-geocode';
-import { getCountryCapital, getCountryCapitalCoords } from './services/country-capital';
+import { getCountryCapitalForecastFromAnyCountryCoords } from './services/country-capital-forecast';
 
 
 
@@ -49,40 +47,7 @@ class App extends Component {
     const { latLng } = e;
     const coords = { lat: latLng.lat(), lng: latLng.lng() };
 
-    googleGeocodeService
-      .getReverseGeocodingCountry(coords.lat, coords.lng)
-      .then(geocodeData => {
-        const countryComponent = geocodeData.status === 'OK'
-          ? geocodeData.results.find(i => i.types[0] === 'country').address_components[0]
-          : null;
-
-        let country = 'N/A';
-        let capital = 'N/A';
-        let capitalCoords = null;
-
-        if (countryComponent) {
-          const { long_name: countryName, short_name: countryCode } = countryComponent;
-          country = countryName;
-          capital = getCountryCapital(countryCode) || 'N/A';
-          capitalCoords = getCountryCapitalCoords(countryCode);
-        }
-
-        return { country, capital, capitalCoords };
-      })
-      .then(({ country, capital, capitalCoords }) => {
-
-        return Promise.all([
-          Promise.resolve({ country, capital }),
-          capitalCoords
-            ? forecastService.getCurrentForecast(capitalCoords.lat, capitalCoords.lng)
-            : forecastService.getCurrentForecast(coords.lat, coords.lng),
-        ]);
-      })
-      .then(([{ country, capital }, forecast]) => {
-        const { temperature, icon } = forecast.currently;
-
-        return { temperature, icon, country, capital };
-      })
+    return getCountryCapitalForecastFromAnyCountryCoords(coords.lat, coords.lng)
       .then(forecastBoxProps => this.setState({ forecastBoxProps }))
       .then(() => { this.handleToggleModal(); })
     ;
