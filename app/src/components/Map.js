@@ -19,11 +19,32 @@ class Map extends Component {
     ;
   }
 
+  componentWillUnmount() {
+    this.unloadMap();
+  }
+
   initMap(googleMaps) {
+    this.googleMaps = googleMaps;
     this.mapInstance = new googleMaps.Map(
       this.mapRef.current,
       this.props.options,
     );
+
+    const { onClick } = this.props;
+
+    if (onClick) {
+      this.mapInstance.addListener('click', onClick);
+    }
+  }
+
+  unloadMap() {
+    if (this.mapInstance) {
+      const { onClick } = this.props;
+
+      if (onClick) {
+        this.googleMaps.event.clearListeners(this.mapInstance, 'click');
+      }
+    }
   }
 
   render() {
@@ -31,13 +52,17 @@ class Map extends Component {
   }
 }
 
+
+
 Map.defaultProps = {
   options: {},
+  onClick: null,
 };
 
 Map.propTypes = {
   apiKey: PropTypes.string.isRequired,
   options: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 export default Map;
