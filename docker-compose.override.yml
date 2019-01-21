@@ -8,6 +8,10 @@ services:
     image: acid-challenge-api:latest
     volumes:
       - ./api:/home/node/app
-    ports:
-      - 8000:8000
     command: yarn watch
+
+  app:
+    build:
+      context: ./app
+      dockerfile: ../docker/app/Dockerfile
+    image: acid-challenge-app:latest

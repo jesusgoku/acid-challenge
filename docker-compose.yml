@@ -4,8 +4,6 @@ services:
   cache:
     image: redis:5.0.3-alpine
     restart: always
-    ports:
-      - 6379:6379
 
   api:
     image: acid-challenge-api:latest
@@ -16,8 +14,20 @@ services:
     env_file: .env
 
   app:
-    image: nginx:1.15.8-alpine
+    image: acid-challenge-app:latest
+    env_file: .env
+    depends_on:
+      - api
 
   proxy:
     image: traefik:1.7.7-alpine
     restart: always
+    volumes:
+      - ./docker/proxy/traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+      - 80:80
+    depends_on:
+      - api
+      - app
