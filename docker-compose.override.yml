@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   api:
@@ -9,9 +9,17 @@ services:
     volumes:
       - ./api:/home/node/app
     command: yarn watch
+    ports:
+      - 8000:8000
 
   app:
     build:
       context: ./app
+      target: build-deps
       dockerfile: ../docker/app/Dockerfile
     image: acid-challenge-app:latest
+    # user: node
+    working_dir: /home/node/app
+    volumes:
+      - ./app:/home/node/app
+    # command: yarn start
