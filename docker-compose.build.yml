@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: ../docker/api/Dockerfile
+    image: acid-challenge-api:latest
+    volumes:
+      - ./api:/home/node/app
+    command: yarn watch
+
+  app:
+    build:
+      context: ./app
+      dockerfile: ../docker/app/Dockerfile
+    image: acid-challenge-app:latest
