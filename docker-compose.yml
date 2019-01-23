@@ -1,9 +1,17 @@
 version: '3.4'
 
+networks:
+  traefik:
+    external: true
+  internal:
+    external: false
+
 services:
   cache:
     image: redis:5.0.3-alpine
     restart: always
+    networks:
+      - internal
 
   api:
     image: acid-challenge-api:latest
@@ -12,12 +20,28 @@ services:
     depends_on:
       - cache
     env_file: .env
+    networks:
+      - internal
+      - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.backend=api-acid-challenge
+      - traefik.frontend.rule=Host:$TRAEFIK_API_HOST
+      - traefik.port=$TRAEFIK_API_PORT
 
   app:
     image: acid-challenge-app:latest
     env_file: .env
     depends_on:
       - api
+    networks:
+      - internal
+      - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.backend=app-acid-challenge
+      - traefik.frontend.rule=Host:$TRAEFIK_APP_HOST
+      - traefik.port=$TRAEFIK_APP_PORT
 
   proxy:
     image: traefik:1.7.7-alpine
@@ -26,8 +50,10 @@ services:
       - ./docker/proxy/traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 8080:8080
       - 80:80
     depends_on:
       - api
       - app
+    networks:
+      - internal
+      - traefik

@@ -5,6 +5,9 @@ services:
     build:
       context: ./api
       dockerfile: ../docker/api/Dockerfile
+      args:
+        - REACT_APP_FORECAST_API_BASE_URL=$REACT_APP_FORECAST_API_BASE_URL
+        - REACT_APP_GOOGLE_MAPS_API_KEY=$REACT_APP_GOOGLE_MAPS_API_KEY
     image: acid-challenge-api:latest
     volumes:
       - ./api:/home/node/app
