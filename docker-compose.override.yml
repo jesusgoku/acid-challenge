@@ -1,11 +1,11 @@
-version: '3.4'
+version: "3.4"
 
 services:
   api:
     build:
       context: ./api
-      dockerfile: ../docker/api/Dockerfile
     image: acid-challenge-api:latest
+      dockerfile: ./Dockerfile
     volumes:
       - ./api:/home/node/app
     command: yarn watch
@@ -15,8 +15,8 @@ services:
   app:
     build:
       context: ./app
+      dockerfile: ./Dockerfile
       target: build-deps
-      dockerfile: ../docker/app/Dockerfile
     image: acid-challenge-app:latest
     # user: node
     working_dir: /home/node/app

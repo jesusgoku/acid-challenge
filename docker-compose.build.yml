@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: ../docker/api/Dockerfile
+      dockerfile: ./Dockerfile
       args:
         - REACT_APP_FORECAST_API_BASE_URL=$REACT_APP_FORECAST_API_BASE_URL
         - REACT_APP_GOOGLE_MAPS_API_KEY=$REACT_APP_GOOGLE_MAPS_API_KEY
@@ -16,5 +16,5 @@ services:
   app:
     build:
       context: ./app
-      dockerfile: ../docker/app/Dockerfile
+      dockerfile: ./Dockerfile
     image: acid-challenge-app:latest
