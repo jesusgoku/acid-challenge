@@ -2,15 +2,22 @@ version: "3.4"
 
 services:
   api:
+    image: acid-challenge-api:latest
     build:
       context: ./api
-    image: acid-challenge-api:latest
       dockerfile: ./Dockerfile
+      args:
+        - REACT_APP_FORECAST_API_BASE_URL=$REACT_APP_FORECAST_API_BASE_URL
+        - REACT_APP_GOOGLE_MAPS_API_KEY=$REACT_APP_GOOGLE_MAPS_API_KEY
+    env_file: .env
     volumes:
       - ./api:/home/node/app
-    command: yarn watch
+      - /home/node/app/node_modules
+    command: yarn run watch
     ports:
       - 8000:8000
+    depends_on:
+      - cache
 
   app:
     build:
@@ -18,8 +25,15 @@ services:
       dockerfile: ./Dockerfile
       target: build-deps
     image: acid-challenge-app:latest
-    # user: node
     working_dir: /home/node/app
+    env_file: .env
     volumes:
       - ./app:/home/node/app
-    # command: yarn start
+      - /home/node/app/node_modules
+    ports:
+      - 3000:3000
+    command: yarn run start
+
+  cache:
+    image: redis:5.0.3-alpine
+    restart: always
